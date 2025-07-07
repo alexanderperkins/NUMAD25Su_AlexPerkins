@@ -1,18 +1,17 @@
 package edu.northeastern.myapplication;
 
+import android.util.Log;
+
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -58,6 +57,7 @@ public class LocationActivity extends AppCompatActivity {
             public void onLocationResult(LocationResult locationResult) {
                 if (locationResult == null) return;
                 for (Location location : locationResult.getLocations()) {
+                    Log.d("LOCATION_UPDATE", "New location: " + location.toString());
                     updateLocationUI(location);
                     calculateDistance(location);
                 }
@@ -81,7 +81,9 @@ public class LocationActivity extends AppCompatActivity {
             requestingLocationUpdates = false;
         }
 
-        startLocationUpdates();
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                LOCATION_REQUEST_CODE);
     }
 
     private void createLocationRequest() {

@@ -41,6 +41,10 @@
             android:name=".PrimeSearchActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".LocationActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
